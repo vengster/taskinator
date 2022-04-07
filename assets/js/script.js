@@ -1,6 +1,7 @@
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 var taskIdCounter = 0;
+var pageContentEl = document.querySelector("#page-content");
 
 var taskFormHandler = function(event) {
     event.preventDefault();
@@ -41,7 +42,7 @@ var createTaskEl = function(taskDataObj){
     listItemEl.appendChild(taskInfoEl);
 
     var taskActionsEl = createTaskActions(taskIdCounter);
-    console.log(taskActionsEl);
+    //console.log(taskActionsEl);
 
     listItemEl.appendChild(taskActionsEl);
 
@@ -91,5 +92,21 @@ var createTaskActions = function(taskId) {
 
     return actionContainerEl;
 }
+var deleteTask = function(taskId) {
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+    taskSelected.remove();
+};
+
+var taskButtonHandler = function(event) {
+    console.log(event.target);
+    if (event.target.matches(".delete-btn")){
+        //get the element's task id
+        var taskId = event.target.getAttribute("data-task-id");
+        deleteTask(taskId);
+    }
+};
 
 formEl.addEventListener("submit", taskFormHandler);
+
+// other logic
+pageContentEl.addEventListener("click", taskButtonHandler);
