@@ -230,8 +230,43 @@ var saveTasks = function(){
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+var loadTasks = function(){
+    tasks = localStorage.getItem("tasks");
+    console.log(tasks);
+    if(tasks === null){
+        tasks = [];
+        return false;
+    }
+    tasks = JSON.parse(tasks);
+    console.log(tasks);
+
+    for (var i =0; i < tasks.length; i++){
+        tasks[i] = taskIdCounter;
+        console.log(tasks[i]);
+    }
+
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "task-item";
+    
+    // add task id as a custom attribute
+    listItemEl.setAttribute("data-task-id", taskIdCounter);
+    console.log(listItemEl);
+
+    var taskInfoEl = document.createElement("div");
+    taskInfoEl.className = "task-info";
+    taskInfoEl.innerHTML = "<h3 class='task-name'>" + tasks[i].name + "</h3><span class='task-type'>" + tasks[i].type + "</span>";
+    listItemEl.appendChild(taskInfoEl);
+    var taskActionsEl = createTaskActions(tasks[i].id);
+    listItemEl.appendChild(taskActionsEL);
+    console.log(listItemEl);
+
+    ///STUCK HERE 4.4.6
+}
+
 formEl.addEventListener("submit", taskFormHandler);
 
 // other logic
 pageContentEl.addEventListener("click", taskButtonHandler);
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+
+loadTasks();
