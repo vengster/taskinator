@@ -107,7 +107,7 @@ var createTaskEl = function(taskDataObj){
     //create div to hold task info and add to list item
     var taskInfoEl = document.createElement("div");
     // give it a class name
-    taskInfoEl.className - "task-info";
+    taskInfoEl.className = "task-info";
     // add HTML content to div
     taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>";
     listItemEl.appendChild(taskInfoEl);
@@ -231,38 +231,37 @@ var saveTasks = function(){
 }
 
 var loadTasks = function(){
-    tasks = localStorage.getItem("tasks");
-    console.log(tasks);
-    if(tasks === null){
-        tasks = [];
+    var savedTasks = localStorage.getItem("tasks");
+
+    if(!savedTasks){
         return false;
     }
-    tasks = JSON.parse(tasks);
-    console.log(tasks);
 
-    for (var i =0; i < tasks.length; i++){
-        tasks[i] = taskIdCounter;
-        console.log(tasks[i]);
+    savedTasks = JSON.parse(savedTasks);
+
+    for(var i = 0; i < savedTasks.length; i++){
+        // pass each task object into the 'createTaskEl()' function
+        createTaskEl(savedTasks[i]);
     }
 
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "task-item";
-    
-    // add task id as a custom attribute
-    listItemEl.setAttribute("data-task-id", taskIdCounter);
-    console.log(listItemEl);
+};
 
-    var taskInfoEl = document.createElement("div");
-    taskInfoEl.className = "task-info";
-    taskInfoEl.innerHTML = "<h3 class='task-name'>" + tasks[i].name + "</h3><span class='task-type'>" + tasks[i].type + "</span>";
-    listItemEl.appendChild(taskInfoEl);
-    var taskActionsEl = createTaskActions(tasks[i].id);
-    listItemEl.appendChild(taskActionsEL);
-    console.log(listItemEl);
+    // var listItemEl = document.createElement("li");
+    // listItemEl.className = "task-item";
+    
+    // // add task id as a custom attribute
+    // listItemEl.setAttribute("data-task-id", tasks[i].id);
+    // console.log(listItemEl);
+
+    // var taskInfoEl = document.createElement("div");
+    // taskInfoEl.className = "task-info";
+    // taskInfoEl.innerHTML = "<h3 class='task-name'>" + tasks[i].name + "</h3><span class='task-type'>" + tasks[i].type + "</span>";
+    // listItemEl.appendChild(taskInfoEl);
+    // var taskActionsEl = createTaskActions(tasks[i].id);
+    // listItemEl.appendChild(taskActionsEl);
+    // console.log(listItemEl);
 
     ///STUCK HERE 4.4.6
-}
-
 formEl.addEventListener("submit", taskFormHandler);
 
 // other logic
